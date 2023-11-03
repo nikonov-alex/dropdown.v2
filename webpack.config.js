@@ -27,5 +27,8 @@ module.exports = {
     },
     optimization: {
         minimize: true
+    },
+    externals: {
+        "@nikonov-alex/components.v2": "@nikonov-alex/components.v2"
     }
 };
