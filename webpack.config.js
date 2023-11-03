@@ -18,6 +18,12 @@ module.exports = {
     output: {
         filename: 'index.js',
         path: path.resolve( "./build" ),
+        library: {
+            type: "module"
+        }
+    },
+    experiments: {
+        outputModule: true,
     },
     optimization: {
         minimize: true
