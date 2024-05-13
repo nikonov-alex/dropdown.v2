@@ -254,7 +254,6 @@ const keydown = ( state: State, event: Event ): State =>
 
 
 const valueChanged = ( oldState: State, newState: State ): boolean =>
-    has_options( oldState ) !== has_options( newState ) ||
     has_options( oldState ) && has_options( newState ) &&
         !is_opened( newState ) && getValue( oldState ) !== getValue( newState );
 const inputEvent = ( state: State ): Event => new InputEvent( "input" );

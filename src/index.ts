@@ -1,10 +1,10 @@
-import { FormComponent } from "@nikonov-alex/components.v2";
+import { FormComponent, Styles } from "@nikonov-alex/components.v2";
 import { State as DropdownState, dropdown } from "./dropdown";
 
 class Dropdown extends FormComponent<DropdownState, { value: string }> {
 
-    constructor( stylesheet?: string ) {
-        super( dropdown, stylesheet );
+    constructor( styles?: Styles ) {
+        super( dropdown, styles );
     }
 
 }
