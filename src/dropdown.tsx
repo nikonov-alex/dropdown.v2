@@ -4,7 +4,6 @@ import * as OptionsComponent from "./options";
 
 const CONTAINER_STYLES = {
     position: "relative",
-    display: "inline-block",
     textAlign: "left",
     cursor: "pointer"
 };
