@@ -1,6 +1,6 @@
 {
   "name": "@nikonov-alex/dropdown.v2",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Dropdown based on @nikonov-alex/components.v2 library",
   "main": "build/index.js",
   "types": "src/index.ts",
@@ -25,7 +25,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@nikonov-alex/components.v2": "^0.0.70",
+    "@nikonov-alex/components.v2": "^0.0.71",
     "@nikonov-alex/functional-library": "^0.0.31",
     "jsx-dom": "^8.0.7"
   }
