@@ -1,3 +1,5 @@
+import { Constructs } from "@nikonov-alex/functional-library";
+const { local } = Constructs;
 import { Option, Options, maybe_select_prev, maybe_select_next } from "./types";
 
 
@@ -91,11 +93,11 @@ const is_disabled = ( option: HTMLElement ): boolean =>
     "disabled" in option.dataset;
 
 const get_class = ( option: HTMLElement ): string | undefined =>
-    ( className =>
-        className === "" ? undefined : className
-    )( option.className
+    local( option.className
         .replace( "dropdown-option", "" )
-        .trim() );
+        .trim(), className =>
+            className === "" ? undefined : className
+    );
 
 const find_option = (target: EventTarget | null): HTMLElement | null =>
     target instanceof HTMLElement
@@ -139,21 +141,21 @@ const create_options = ( option: HTMLElement ): Options =>
 
 const clicked = ( state: State, event: Event ): State =>
     !is_opened( state ) ? state
-    : ( option =>
+    : local( find_option( event.target ), option =>
         !option || is_disabled( option )
             ? state
             : close( apply_selection( state ) )
-    )( find_option( event.target ) );
+    );
 
 const mouseMoved = ( state: State, event: Event ): State =>
     !is_opened( state ) ? state
-    : ( option =>
+    : local( find_option( event.target ), option =>
         !(option instanceof HTMLElement) ||
         option_index( option ) === selected_index( state ) ||
         is_disabled( option )
             ? state
             : set_selection( state, create_options( option ) )
-    )( find_option( event.target ) );
+    );
 
 const keydown = ( state: State, event: Event ): State =>
     !is_opened( state ) ? state

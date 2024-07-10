@@ -1,3 +1,5 @@
+import { Constructs } from "@nikonov-alex/functional-library";
+const { local } = Constructs;
 import { Option, Options, maybe_select_prev, maybe_select_next } from "./types";
 import * as OptionsComponent from "./options";
 
@@ -174,6 +176,7 @@ const Dropdown = (state: HasOptions): HTMLElement =>
             ? <OptionsComponent.Render { ... state.opened } />
             : <span /> }
     </div> as HTMLElement;
+
 const EmptyDropdown = (): HTMLElement =>
     <span className="dropdown-empty" /> as HTMLElement;
 
@@ -295,19 +298,23 @@ const toOption = (elem: HTMLOptionElement): Option =>
     });
 
 const toOptions = (nodes: NodeListOf<HTMLOptionElement>, selected: HTMLOptionElement | null): Options =>
-    ((options, selectedIndex) => ({
-        left: options.slice(0, selectedIndex),
-        value: options[selectedIndex],
-        right: options.slice(selectedIndex + 1),
-    }))
-    (Array.prototype.map.call(nodes, toOption) as Option[],
-        selected ? Array.prototype.indexOf.call(selected.parentElement!.children, selected) : 0);
+    local( Array.prototype.map.call(nodes, toOption) as Option[], options =>
+        local( selected ?
+            Array.prototype.indexOf.call(selected.parentElement!.children, selected)
+            : 0, selectedIndex =>
+                ({
+                    left: options.slice(0, selectedIndex),
+                    value: options[selectedIndex],
+                    right: options.slice(selectedIndex + 1),
+                })
+        ));
 
 const maybeAppendOptions = <T extends {}>(object: T, elem: HTMLElement): T & OptionsState =>
-    ((nodes, selected) => 0 === nodes.length
-            ? {...object, options: undefined}
-            : {...object, options: toOptions(nodes, selected)}
-    )(findOptions(elem), findSelectedOption(elem));
+    local( findOptions(elem), nodes =>
+        local( findSelectedOption(elem), selected =>
+            0 === nodes.length
+                ? {...object, options: undefined}
+                : {...object, options: toOptions(nodes, selected)} ));
 
 const maybeAppendRequired = <T extends {}>(object: T, elem: HTMLElement): T & ValidationState =>
     elem.hasAttribute( "required" )
